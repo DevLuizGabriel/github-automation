@@ -5,6 +5,10 @@ import org.eclipse.jgit.api.Git;
 public class Main {
     public static void main(String[] args) {
 
+
+
+
+
         // Cria uma instancia do GitManager
         GitManager gitManager = new GitManager();
 
