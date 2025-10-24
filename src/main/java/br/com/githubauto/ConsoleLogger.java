@@ -4,12 +4,4 @@ package br.com.githubauto;
 
 public class ConsoleLogger {
 
-    public void log(String message) {
-        System.out.println("[LOG] " + message);
-    }
-
-    public void error(String message) {
-        System.err.println("[ERROR] " + message);
-    }
-
 }

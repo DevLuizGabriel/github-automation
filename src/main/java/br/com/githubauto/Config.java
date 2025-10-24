@@ -4,24 +4,30 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-
-//Armazena constantes e informações sensíveis que o sistema precisa para funcionar.
-
+// Armazena informações sensíveis do projeto.
 public class Config {
-    private static Properties props = new Properties();
 
-    static{
-        try {
-            FileInputStream fis = new FileInputStream("github-automation/.env"); // caminho do arquivo .env
+    private static final Properties props = new Properties();
+    private static final String ENV_FILE = ".env"; // arquivo na raiz do projeto
+
+    static {
+        try (FileInputStream fis = new FileInputStream(ENV_FILE)) {
             props.load(fis);
-
         } catch (IOException e) {
-        System.out.println("Erro ao carregar arquivo de configuração: " + e.getMessage());
+            System.err.println("Não foi possível carregar o arquivo .env: " + ENV_FILE);
+            e.printStackTrace();
+        }
     }
-}
 
-public static String get(String key) {
-    return props.getProperty(key);
-}
+    public static String getUsername() {
+        return System.getenv("GITHUB_USER");
+    }
 
+    public static String getToken() {
+        return System.getenv("GITHUB_TOKEN");
+    }
+
+    public static String getRepoPath() {
+        return props.getProperty("REPO_PATH");
+    }
 }

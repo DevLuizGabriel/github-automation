@@ -1,18 +1,27 @@
 package br.com.githubauto;
 
+import org.eclipse.jgit.api.Git;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Iniciando a automação do GitHub");
-        //Criar instanicas das outras classes
+
+        // Cria uma instancia do GitManager
+        GitManager gitManager = new GitManager();
+
+        // Mensagem do commit
+        String commitMessage = "Teste 1 de commit automático";
+
+        // Chama o commitAndPush
+        gitManager.commitAndPush(commitMessage);
+
+        // Feedback no console
+        System.out.println("Processo finalizado!");
 
 
-        GitManager git = new GitManager();
-        git.addAndCommit("commit automatico de teste");
-        git.pushChanges();
     }
 
 
 
 
     }
-}
+

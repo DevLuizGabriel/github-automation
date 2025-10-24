@@ -1,31 +1,36 @@
 package br.com.githubauto;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import java.io.File;
 
-// Gerencia todas as operações de Git usando a biblioteca JGit.
-
+// Gerencia operações Git usando JGit.
 public class GitManager {
-    private static final String REPO_PATH = "D:/Projetos/github-automation"; // caminho para a pasta do repositório local (deve conter .git)
-    private static final String USERNAME = Config.get("GITHUB_USER"); // seu usuário GitHub
-    private static final String TOKEN = Config.get("GITHUB_TOKEN"); // token do GitHub
 
+    private static final String USERNAME = Config.getUsername();
+    private static final String TOKEN = Config.getToken();
+    private static final String REPO_PATH = Config.getRepoPath();
 
-    // lógica para adicionar, commitar e dar push
+    // Adiciona, commita e dá push automaticamente
     public void commitAndPush(String message) {
         try {
             Git git = Git.open(new File(REPO_PATH));
+
+            // Adiciona todos os arquivos
             git.add().addFilepattern(".").call();
+
+            // Cria commit
             git.commit().setMessage(message).call();
 
+            // Push para remoto
             git.push()
-                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(USERNAME, TOKEN)).call();
-            System.out.println("Commite e push realizados com sucesso!");
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(USERNAME, TOKEN))
+                    .call();
+
+            System.out.println("✅ Commit e push realizados com sucesso!");
         } catch (Exception e) {
-            System.out.println("Erro ao realizar commit/push:" + e.getMessage());
+            System.err.println("❌ Erro ao realizar commit/push: " + e.getMessage());
             e.printStackTrace();
-             }
         }
     }
+}
